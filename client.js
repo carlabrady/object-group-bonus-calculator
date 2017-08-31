@@ -10,53 +10,53 @@ var employees = [ atticus, jem, boo, scout, robert, mayella ];
 // YOU SHOULD NOT NEED TO CHANGE ANYTHING ABOVE THIS POINT
 
 //new object constructor to create bonus info
-function EmployeeBonus (name, bonusPercentage, totalCompensation, totalBonus) {
+function EmployeeBonus (name, employeeNumber, annualSalary, reviewRating) {
     this.name = name;
-    this.bonusPercentage = bonusPercentage;
-    this.totalCompensation = totalCompensation;
-    this.totalBonus = totalBonus;  
+    this.bonusPercentage = bonusPercentageCalc(reviewRating, employeeNumber, annualSalary);
+    this.totalBonus = totalBonus(annualSalary, bonusPercentage);
+    this.totalCompensation = totalComp(totalBonus, annualSalary);
 } //end of constructor
 
-function bonusPercentageCalc(reviewRating,  employeeNumber, annualSalary) {
+function bonusPercentageCalc(reviewRatingInput, employeeNumberInput, annualSalaryInput) {
     var bonusPercentage = null;
-    if (reviewRating <= 2){
+    if (reviewRatingInput <= 2){
         bonusPercentage = 0;    
         //return bonusPercentage
-     } else if (reviewRating === 3) {
+     } else if (reviewRatingInput === 3) {
          bonusPercentage = 0.04;
          //return bonusPercentage;
-     } else if (reviewRating === 4) {
+     } else if (reviewRatingInput === 4) {
          bonusPercentage = 0.06;
          //return bonusPercentage;
-     } else if (reviewRating === 5) {
+     } else if (reviewRatingInput === 5) {
          bonusPercentage = 0.1;
          //return bonusPercentage;
      } 
-      if (employeeNumber.length == 4){  //might need to change string to number
+      if (employeeNumberInput.length == 4){  //might need to change string to number
         bonusPercentage += 0.05;
      }
-      if (annualSalary >= 65000){
+      if (annualSalaryInput >= 65000){
         bonusPercentage -= 0.01;
       }
 
      return bonusPercentage;
 }
 
-function totalBonus(annualSalary, bonusPercentage) {
+function totalBonus(annualSalaryInput, bonusPercentageInput) {
     //console.log(annualSalary * bonusPercentage);
-    return annualSalary * bonusPercentage;
+    return Math.round(annualSalaryInput * bonusPercentageInput);
 }
 
-function totalCompensation(totalBonus, annualSalary) {
-    return totalBonus + annualSalary;
+function totalComp(totalBonusInput, annualSalaryInput) {
+    return totalBonusInput + annualSalaryInput;
 }
 
 
-
+var testEmployee = new EmployeeBonus (atticus.name, atticus.employeeNumber, atticus.annualSalary, atticus.reviewRating);
 
 
 //console.log(bonusPercentageCalc(atticus.reviewRating, atticus.employeeNumber, atticus.annualSalary));
 console.log(bonusPercentageCalc(employees[0].reviewRating, employees[0].employeeNumber , employees[0].annualSalary));
 console.log(bonusPercentageCalc(employees[1].reviewRating, employees[1].employeeNumber , employees[1].annualSalary));
 //console.log(totalCompensation());
-console.log(totalBonus(55000, 0.05));
+console.log(testEmployee);
